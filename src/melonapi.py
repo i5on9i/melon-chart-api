@@ -1,7 +1,7 @@
 #encoding=utf-8
 
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 from lxml import etree
 from io import StringIO, BytesIO
@@ -66,6 +66,8 @@ class MelonChart(object):
         tree = self.tree
         xpath = '//a[contains(text(), "{title}")]/ancestor::tr'.format(title=title)
         tr = tree.xpath(xpath)
+        if len(tr) == 0:
+            return None
         ranks = tr[0].xpath('.//span[contains(@class, "rank")]')
         
         return int(ranks[0].text)
@@ -73,13 +75,23 @@ class MelonChart(object):
 
 def main():
     melonSearchChartUrl = "http://www.melon.com/chart/search/list.htm"
-    sdate = datetime(2016, 3, 7)
-    edate = datetime(2016, 3, 13)
+
+
+    # sdate = datetime(2016, 3, 7)
+    # edate = datetime(2016, 3, 13)
+    sdate = datetime(2016, 5, 23)
+    edate = datetime(2016, 5, 29)
+    tdelta = timedelta(days=7)
     
     mchart = MelonChart()
-    rank = mchart.getChart(sdate, edate).getRank("벚꽃 엔딩")
-    
-    print(rank)
+    while True:
+
+        rank = mchart.getChart(sdate, edate).getRank("벚꽃 엔딩")
+        print("sdate = {sdate}".format(sdate=sdate))
+        print(rank)
+
+        sdate = sdate + tdelta
+        edate = edate + tdelta
 
     
 
