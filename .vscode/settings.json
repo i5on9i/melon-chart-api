@@ -1,0 +1,7 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "python.pythonPath": "c:/a/envs/spider3/Scripts/python.exe",
+    "python.autoComplete.extraPaths": [
+        "c:/a/envs/spider3/Lib"
+    ]
+}
